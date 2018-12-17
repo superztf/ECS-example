@@ -1,5 +1,5 @@
 import { EntityAdmin } from "lipstick-ecs";
-import { CanvasContext } from "./components.ts/CanvasContext";
+import { CanvasContext } from "./components/CanvasContext";
 
 function main() {
     const admin = new EntityAdmin();

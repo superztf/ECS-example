@@ -1,27 +1,25 @@
 import { System } from "lipstick-ecs";
-import { CanvasContext } from "../components.ts/CanvasContext";
-import { CircleInfo } from "../components.ts/CircleInfo";
-import { Position } from "../components.ts/Position";
-class DrawSystem extends System {
-    public Update(timeDelta: number) {
+import { CanvasContext } from "../components/CanvasContext";
+import { CircleInfo } from "../components/CircleInfo";
+import { Position } from "../components/Position";
+
+export class DrawSystem extends System {
+
+    public Update(t: number) {
         const canvas = this.admin.GetPubComponent(CanvasContext);
-    }
-
-    private get canvas(): CanvasContext {
-        const c = this.admin.GetPubComponent(CanvasContext);
-        if (c) {
-            return c;
-        } else {
-            throw (new Error("get CanvasContext fail"));
+        if (canvas) {
+            const w = canvas.ctx.canvas.width;
+            const h = canvas.ctx.canvas.height;
+            canvas.ctx.clearRect(0, 0, w, h);
+            for (let p of this.admin.GetComponentsByTuple(Position, CircleInfo)) {
+                const c = p.GetSibling(this.admin, CircleInfo) as CircleInfo; // GetSiblingForce
+                canvas.ctx.beginPath();
+                canvas.ctx.arc(p.x, p.y, c.radius, 0, 2 * Math.PI);
+                canvas.ctx.fillStyle = c.color;
+                canvas.ctx.fill();
+                canvas.ctx.closePath();
+            }
         }
-    }
-
-    private drawcircle(ctx: CanvasRenderingContext2D, c: CircleInfo, p: Position) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, c.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = c.color;
-        ctx.fill();
-        ctx.closePath();
     }
 }
 // window.onload=function(){
