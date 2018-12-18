@@ -8,7 +8,7 @@ export class MoveSystem extends System {
             const p = m.GetSibling(this.admin, Position);
             if (p) {
                 p.x += m.vx * t / 1000;
-                m.vy += 0.05;
+                m.vy += 0.5;
                 p.y += m.vy * t / 1000;
             }
         }
