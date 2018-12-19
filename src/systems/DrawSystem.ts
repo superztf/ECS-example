@@ -12,7 +12,7 @@ export class DrawSystem extends System {
             const h = canvas.ctx.canvas.height;
             canvas.ctx.clearRect(0, 0, w, h);
             for (const p of this.admin.GetComponentsByTuple(Position, CircleInfo)) {
-                const c = p.GetSibling(this.admin, CircleInfo) as CircleInfo; // GetSiblingForce
+                const c = p.SureSibling(this.admin, CircleInfo);
                 canvas.ctx.beginPath();
                 canvas.ctx.arc(p.x, p.y, c.radius, 0, 2 * Math.PI);
                 canvas.ctx.fillStyle = c.color;

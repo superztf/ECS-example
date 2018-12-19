@@ -1,31 +1,35 @@
 import { EntityAdmin } from "lipstick-ecs";
 import { CanvasContext } from "./components/CanvasContext";
 import { CircleInfo } from "./components/CircleInfo";
+import { FrameCount } from "./components/FrameCount";
 import { Movement } from "./components/Movement";
 import { Position } from "./components/Position";
 import { BorderCrashSystem } from "./systems/BorderCrashSystem";
 import { DrawSystem } from "./systems/DrawSystem";
 import { EntityCrashSystem } from "./systems/EntityCrashSystem";
+import { FPSSystem } from "./systems/FPSSystem";
 import { MoveSystem } from "./systems/MoveSystem";
 import { IsCircleCrash } from "./utils";
 
-const NUM = 20;
+const NUM = 25;
 
 function main() {
     const admin = new EntityAdmin();
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    canvas.height = 960;
-    canvas.width = 840;
+    canvas.height = 800;
+    canvas.width = 1280;
     const context = canvas.getContext("2d");
     if (!context) {
         document.write("canvas.getContext('2d') err!");
         return;
     }
     admin.SetPubComponent(new CanvasContext(context));
+    admin.SetPubComponent(new FrameCount());
     admin.AddSystem(BorderCrashSystem, 2);
     admin.AddSystem(DrawSystem, 4);
     admin.AddSystem(EntityCrashSystem, 1);
     admin.AddSystem(MoveSystem, 3);
+    admin.AddSystem(FPSSystem);
 
     for (let i = 0; i < NUM; i++) {
         const r = generateColor();
