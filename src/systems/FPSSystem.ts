@@ -14,16 +14,16 @@ export class FPSSystem extends System {
             }
             const real_fps = 1000 / t;
 
-            ++fc.count;
-            fc.timespent += t;
-            if (fc.timespent >= 1000) {
-                fc.lastfps = fc.timespent / fc.count;
+            fc.count += 1;
+            fc.spent += t;
+            if (fc.spent >= 1000) {
+                fc.lastfps = fc.count / fc.spent * 1000;
                 fc.count = 0;
-                fc.timespent = 0;
+                fc.spent = 0;
             }
             let realrate = 1;
             if (fc.lastfps) {
-                realrate = 1 - 0.618;
+                realrate = 0.618;
             }
             const fps = Math.round(real_fps * realrate + fc.lastfps * (1 - realrate));
             this.DrawText(canvas.ctx, fps);
