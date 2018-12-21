@@ -1,6 +1,6 @@
 # ECS Example
 
-## This is an example for [lipstick-ECS](www.npmjs.com/package/lipstick-ecs).
+## This is an example for [lipstick-ECS](https://www.npmjs.com/package/lipstick-ecs).
 
 ![gif](https://raw.githubusercontent.com/superztf/ECS-example/master/example.gif)
 
