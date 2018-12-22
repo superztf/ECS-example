@@ -1,13 +1,13 @@
 {
   "name": "ecs-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is an example for how to use lipstick-ecs",
   "private": true,
   "directories": {
     "lib": "lib"
   },
   "dependencies": {
-    "lipstick-ecs": "0.0.2"
+    "lipstick-ecs": "0.1.4"
   },
   "devDependencies": {
     "webpack": "^4.27.1",
@@ -17,6 +17,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ci": "tsc -p . && npx webpack --config webpack.config.js"
   },
-  "author": "",
+  "author": "zhengtengfei",
   "license": "MIT"
 }
