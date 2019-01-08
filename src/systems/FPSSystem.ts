@@ -1,12 +1,12 @@
-import { System } from "lipstick-ecs";
+import { EntityAdmin, System } from "lipstick-ecs";
 import { CanvasContext } from "../components/CanvasContext";
 import { FrameCount } from "../components/FrameCount";
 
 export class FPSSystem extends System {
-    public Update(t: number) {
+    public static Update(admin: EntityAdmin, t: number) {
 
-        const fc = this.admin.GetPubComponent(FrameCount);
-        const canvas = this.admin.GetPubComponent(CanvasContext);
+        const fc = admin.GetPubComponent(FrameCount);
+        const canvas = admin.GetPubComponent(CanvasContext);
         if (fc && canvas) {
             if (t <= 0) {
                 this.DrawText(canvas.ctx, t);
@@ -30,7 +30,7 @@ export class FPSSystem extends System {
         }
     }
 
-    private DrawText(ctx: CanvasRenderingContext2D, fps: number) {
+    private static DrawText(ctx: CanvasRenderingContext2D, fps: number) {
         ctx.fillStyle = "#fff";
         ctx.strokeStyle = "#fff";
         ctx.font = "10px Arial";

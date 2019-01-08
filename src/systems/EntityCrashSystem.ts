@@ -1,19 +1,19 @@
-import { System } from "lipstick-ecs";
+import { EntityAdmin, System } from "lipstick-ecs";
 import { CircleInfo } from "../components/CircleInfo";
 import { Movement } from "../components/Movement";
 import { Position } from "../components/Position";
 
 export class EntityCrashSystem extends System {
-    public Update(t: number) {
-        for (const p1 of this.admin.GetComponents(Position)) {
-            for (const p2 of this.admin.GetComponents(Position)) {
+    public static Update(admin: EntityAdmin, t: number) {
+        for (const p1 of admin.GetComponents(Position)) {
+            for (const p2 of admin.GetComponents(Position)) {
                 if (p1.entity === p2.entity) {
                     continue;
                 }
-                const c1 = p1.SureSibling(this.admin, CircleInfo);
-                const c2 = p2.SureSibling(this.admin, CircleInfo);
-                const m1 = p1.SureSibling(this.admin, Movement);
-                const m2 = p2.SureSibling(this.admin, Movement);
+                const c1 = p1.SureSibling(CircleInfo);
+                const c2 = p2.SureSibling(CircleInfo);
+                const m1 = p1.SureSibling(Movement);
+                const m2 = p2.SureSibling(Movement);
                 const distance = (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2;
                 if (distance < (c1.radius + c2.radius) ** 2) {
                     const preview_dis = (p1.x + m1.vx * t / 1000 - p2.x - m2.vx * t / 1000) ** 2 + (p1.y + m1.vy * t / 1000 - p2.y - m2.vy * t / 1000) ** 2;
@@ -25,7 +25,7 @@ export class EntityCrashSystem extends System {
         }
     }
 
-    private EntityCrash(mv1: Movement, mv2: Movement, r1: CircleInfo, r2: CircleInfo, p1: Position, p2: Position) {
+    private static EntityCrash(mv1: Movement, mv2: Movement, r1: CircleInfo, r2: CircleInfo, p1: Position, p2: Position) {
         const ma = r1.radius * r1.radius;
         const mb = r2.radius * r2.radius;
 
